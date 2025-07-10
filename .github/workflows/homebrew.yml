@@ -1,7 +1,7 @@
 name: Build
 
 # on: [push, pull_request]
-on: [release, workflow_dispatch]
+on: [push, release, workflow_dispatch]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
