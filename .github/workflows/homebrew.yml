@@ -1,4 +1,4 @@
-name: Build
+name: Homebrew
 
 # on: [push, pull_request]
 on: [push, release, workflow_dispatch]
