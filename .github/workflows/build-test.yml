@@ -39,7 +39,8 @@ jobs:
 
     steps:
       - run: echo $GITHUB_CONTEXT
-        # env:
+        env:
+          GITHUB_CONTEXT: ${{toJson(github)}}
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
