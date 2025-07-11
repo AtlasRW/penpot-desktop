@@ -1,8 +1,8 @@
 name: BuildTest
 
 # on: [push, pull_request, workflow_call]
-on: [workflow_call]
-# on: [push]
+# on: [workflow_call]
+on: [push]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
@@ -21,12 +21,14 @@ jobs:
 
     steps:
       - name: Create a File
-        run: echo "hello from ${{ matrix.os }}" > file-${{ matrix.os }}.txt
+        run: |
+          echo "hello from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-1.txt
+          echo "hello again from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-2.txt
       - name: Save artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.os }}
-          path: file-${{ matrix.os }}.txt
+          path: dist/*.txt
           retention-days: 1
 
   release:
@@ -42,4 +44,4 @@ jobs:
           pattern: build-*
           path: my-artifact
           merge-multiple: true
-      - run: ls -R my-artifact
+      - run: ls -R
