@@ -1,0 +1,26 @@
+name: Release
+
+# on: [push, pull_request]
+on: [push, workflow_dispatch]
+
+permissions:
+  # Required for Electron Builder to create and update releases on Github
+  contents: write
+
+env:
+  DEPENDENCIES_BOT_NAME: "dependabot[bot]"
+
+jobs:
+  release:
+    needs: [Build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: my_artifact
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: build-*
+          merge-multiple: true
