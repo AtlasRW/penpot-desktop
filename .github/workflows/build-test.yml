@@ -1,4 +1,4 @@
-name: Build Test
+name: BuildTest
 
 on: [push, pull_request, workflow_call]
 
@@ -26,9 +26,3 @@ jobs:
           name: build-${{ matrix.os }}
           path: file-${{ matrix.os }}.txt
           retention-days: 1
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/release.yml
-      # if: rrrr

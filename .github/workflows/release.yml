@@ -2,8 +2,8 @@ name: Release
 
 # on: [push, pull_request]
 on:
-  # push:
-  # workflow_dispatch:
+  push:
+  workflow_dispatch:
   workflow_call:
   # workflow_run:
   #   workflows: [Build Test]
@@ -21,12 +21,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Test
+        uses: ./.github/workflows/build-test.yml
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-ubuntu-latest
-          run-id: ${{ github.event.workflow_run.id }}
+          # run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: build-*
           path: my-artifact
