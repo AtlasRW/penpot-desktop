@@ -37,6 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     # if: github.event_name == 'pull_request' && github.event.pull_request.user.login != env.DEPENDENCIES_BOT_NAME
+    # if: github.event_name == 'pull_request' && github.event.pull_request.user.login != env.DEPENDENCIES_BOT_NAME
     # && contains(github.event.pull_request.base.ref, 'release') && startsWith(github.head_ref, 'releases/')
 
     steps:
