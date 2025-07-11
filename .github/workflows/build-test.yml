@@ -4,7 +4,7 @@ name: BuildTest
 # on: [workflow_call]
 on:
   pull_request:
-    branches: [main]
+    branches: [homebrew-test]
     types: [opened]
 
 permissions:
