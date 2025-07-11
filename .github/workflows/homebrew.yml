@@ -1,7 +1,8 @@
 name: Homebrew
 
 # on: [push, pull_request]
-on: [push, release, workflow_dispatch]
+# on: [push, release, workflow_dispatch]
+on: [workflow_call]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
