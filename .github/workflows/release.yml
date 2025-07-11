@@ -4,10 +4,10 @@ name: Release
 on:
   # push:
   # workflow_dispatch:
-  # workflow_call:
-  workflow_run:
-    workflows: [Build Test]
-    types: [completed]
+  workflow_call:
+  # workflow_run:
+  #   workflows: [Build Test]
+  #   types: [completed]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github

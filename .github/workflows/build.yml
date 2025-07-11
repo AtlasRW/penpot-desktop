@@ -59,3 +59,6 @@ jobs:
             dist/*.zip
             dist/*.blockmap
           retention-days: 1
+      - name: Release
+        uses: ./.github/workflows/release.yml
+        # if: rrrr
