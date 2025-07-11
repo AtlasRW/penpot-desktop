@@ -1,8 +1,11 @@
 name: BuildTest
 
-on: [push, workflow_call]
+# on: [push, workflow_call]
 # on: [workflow_call]
-# on: [push]
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
@@ -12,40 +15,42 @@ env:
   DEPENDENCIES_BOT_NAME: "dependabot[bot]"
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+  # build:
+  #   strategy:
+  #     matrix:
+  #       os: [ubuntu-latest, windows-latest, macos-latest]
 
-    runs-on: ${{ matrix.os}}
+  #   runs-on: ${{ matrix.os}}
 
-    steps:
-      - name: Create a File
-        run: |
-          mkdir dist
-          echo "hello from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-1.txt
-          echo "hello again from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-2.txt
-      - name: Save artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-${{ matrix.os }}
-          path: dist/*.txt
-          retention-days: 1
+  #   steps:
+  #     - name: Create a File
+  #       run: |
+  #         mkdir dist
+  #         echo "hello from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-1.txt
+  #         echo "hello again from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-2.txt
+  #     - name: Save artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: build-${{ matrix.os }}
+  #         path: dist/*.txt
+  #         retention-days: 1
 
   release:
-    needs: [build]
+    # needs: [build]
     runs-on: ubuntu-latest
     # if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     # && contains(github.event.pull_request.base.ref, 'release') && startsWith(github.head_ref, 'releases/')
 
     steps:
+      - run: echo ${{github.ref_name}}
+      - run: echo ${{github.head_ref}}
       - run: echo $GITHUB_CONTEXT
         env:
           GITHUB_CONTEXT: ${{toJson(github)}}
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: build-*
-          path: my-artifact
-          merge-multiple: true
-      - run: ls -R
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     pattern: build-*
+      #     path: my-artifact
+      #     merge-multiple: true
+      # - run: ls -R

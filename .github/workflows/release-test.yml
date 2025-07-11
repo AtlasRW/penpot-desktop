@@ -1,0 +1,31 @@
+# name: ReleaseTest
+
+# on:
+#   pull_request:
+#     types: [opened]
+#     branches: [main]
+
+# jobs:
+#   build:
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest, windows-latest, macos-latest]
+#     runs-on: ${{ matrix.os}}
+#     steps:
+#       - name: Create a File
+#         run: |
+#           mkdir dist
+#           echo "hello from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-1.txt
+#           echo "hello again from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-2.txt
+#       - name: Save artifacts
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: build-${{ matrix.os }}
+#           path: dist/*.txt
+#           retention-days: 1
+
+#   trigger_workflow:
+#     if: contains(github.head_ref, 'release')
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "Triggered workflow for a pull request from a branch containing 'release' to 'main'"
