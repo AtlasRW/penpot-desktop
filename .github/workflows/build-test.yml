@@ -42,7 +42,7 @@ jobs:
         with:
           # run-id: ${{ github.event.workflow_run.id }}
           # github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: build-*
+          pattern: build-*/*.zip
           path: my-artifact
           merge-multiple: true
       - run: ls -R
