@@ -3,7 +3,7 @@ name: Release
 # on: [push, pull_request]
 
 on:
-  [push]
+  [workflow_call]
 
   # workflow_run:
   #   workflows: [Build Test]
