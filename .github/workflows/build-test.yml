@@ -35,7 +35,7 @@ jobs:
   release:
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && contains(github.event.pull_request.base.ref, 'release') && startsWith(github.head_ref, 'releases/')
+    # if: github.event_name == 'pull_request' && contains(github.event.pull_request.base.ref, 'release') && startsWith(github.head_ref, 'releases/')
 
     steps:
       - run: echo ${{fromJson(github)}}
