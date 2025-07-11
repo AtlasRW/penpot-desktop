@@ -2,9 +2,9 @@ name: Release
 
 # on: [push, pull_request]
 on:
-  push:
-  workflow_dispatch:
-  workflow_call:
+  # push:
+  # workflow_dispatch:
+  # workflow_call:
   workflow_run:
     workflows: [BuildTest]
     types: [completed]
@@ -24,7 +24,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: my_artifact
+          name: build-ubuntu-latest
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: build-*
