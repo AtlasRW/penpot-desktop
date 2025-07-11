@@ -1,7 +1,7 @@
 name: BuildTest
 
 # on: [push, pull_request, workflow_call]
-on: [workflow_call]
+on: [push]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
@@ -27,3 +27,21 @@ jobs:
           name: build-${{ matrix.os }}
           path: file-${{ matrix.os }}.txt
           retention-days: 1
+
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-ubuntu-latest
+          # run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: build-*
+          path: my-artifact
+          merge-multiple: true
+      - run: ls -R my-artifact
