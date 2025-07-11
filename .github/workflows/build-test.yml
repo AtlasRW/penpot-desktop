@@ -1,7 +1,8 @@
 name: BuildTest
 
 # on: [push, pull_request, workflow_call]
-on: [push]
+on: [workflow_call]
+# on: [push]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
