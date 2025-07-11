@@ -22,6 +22,7 @@ jobs:
     steps:
       - name: Create a File
         run: |
+          mkdir dist
           echo "hello from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-1.txt
           echo "hello again from ${{ matrix.os }}" > dist/file-${{ matrix.os }}-2.txt
       - name: Save artifacts
