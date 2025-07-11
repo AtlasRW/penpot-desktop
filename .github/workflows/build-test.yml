@@ -42,8 +42,8 @@ jobs:
     # && contains(github.event.pull_request.base.ref, 'release') && startsWith(github.head_ref, 'releases/')
 
     steps:
-      - run: echo ${{github.ref_name}}
       - run: echo ${{github.head_ref}}
+      - run: echo ${{github.base_ref}}
       - run: echo $GITHUB_CONTEXT
         env:
           GITHUB_CONTEXT: ${{toJson(github)}}
