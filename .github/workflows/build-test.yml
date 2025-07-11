@@ -39,7 +39,9 @@ jobs:
     # && contains(github.event.pull_request.base.ref, 'release') && startsWith(github.head_ref, 'releases/')
 
     steps:
-      - run: echo ${{toJson(github)}}
+      - run: echo $GITHUB_CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{toJson(github)}}
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
