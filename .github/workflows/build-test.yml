@@ -26,3 +26,8 @@ jobs:
           name: build-${{ matrix.os }}
           path: file-${{ matrix.os }}.txt
           retention-days: 1
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/release.yml
+      # if: rrrr
