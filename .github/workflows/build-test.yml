@@ -1,6 +1,6 @@
 name: BuildTest
 
-on: [push, pull_request, workflow_call]
+on: [push, workflow_call]
 # on: [workflow_call]
 # on: [push]
 
@@ -35,7 +35,7 @@ jobs:
   release:
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    # if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     # && contains(github.event.pull_request.base.ref, 'release') && startsWith(github.head_ref, 'releases/')
 
     steps:
