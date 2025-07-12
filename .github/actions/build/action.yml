@@ -21,14 +21,14 @@ runs:
   using: composite
 
   steps:
-    - name: Cache Build files
-      uses: actions/cache@v4
-      with:
-        key: build-${{ inputs.build-os }}-${{ github.event.head_commit.id || github.event.pull_request.head.sha }}
-        path: dist/
-        restore-keys: |
-          build-${{ inputs.build-os }}-
-          build-
+    # - name: Cache Build files
+    #   uses: actions/cache@v4
+    #   with:
+    #     key: build-${{ inputs.build-os }}-${{ github.event.head_commit.id || github.event.pull_request.head.sha }}
+    #     path: dist/
+    #     restore-keys: |
+    #       build-${{ inputs.build-os }}-
+    #       build-
     - name: Create a File
       shell: bash
       run: |
