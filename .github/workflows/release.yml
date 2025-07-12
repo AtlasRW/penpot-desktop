@@ -43,18 +43,18 @@ jobs:
       - name: Get release date and version
         run: |
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-          echo "RELEASE_VERSION=$(echo ${{github.ref_name || github.head_ref}} | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(echo ${{ github.ref_name || github.head_ref }} | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
 
       - run: echo $GH
         env:
-          GH: ${{toJson(github)}}
+          GH: ${{ toJson(github) }}
 
       - name: Get current latest release
         uses: pozetroninc/github-action-get-latest-release@v0.8.0
         id: get-latest-release
         with:
-          repository: ${{github.repository}}
-          token: ${{secrets.GITHUB_TOKEN}}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           excludes: prerelease, draft
 
       - name: Download artifacts
@@ -83,15 +83,17 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v2
-        # if: github.ref_type == 'tag'
         with:
-          name: "v${{env.RELEASE_VERSION}} (${{env.RELEASE_DATE}})"
-          tag_name: v${{env.RELEASE_VERSION}}
+          name: "v${{ env.RELEASE_VERSION }} (${{ env.RELEASE_DATE }})"
+          tag_name: v${{ env.RELEASE_VERSION }}
           prerelease: true
           make_latest: true
           # append_body: true
           # generate_release_notes: true
           files: release/*
           body: |
-            HEY
+            Features
+            -
+            Fixed
+            -
             **Full Changelog**: https://github.com/${{ github.repository }}/commits/${{ steps.get-latest-release.outputs.release }}...${{ env.RELEASE_VERSION }}
