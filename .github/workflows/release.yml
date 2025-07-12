@@ -41,11 +41,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get Current Date
-        run: echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-
-      - name: Get Tag Name/Semver
-        run: echo "TAG_NAME=0.0.2" >> $GITHUB_ENV
+      - name: Get Current Date / Semver Tag
+        run: |
+          echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+          echo ${{github.head_ref}}
+          echo "TAG_NAME=0.0.2" >> $GITHUB_ENV
+          which sed
+          which grep
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
