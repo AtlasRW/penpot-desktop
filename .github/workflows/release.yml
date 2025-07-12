@@ -48,9 +48,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - run: echo $GITHUB_CONTEXT
-      #   env:
-      #     GITHUB_CONTEXT: ${{toJson(github)}}
+      - run: echo $GITHUB_CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{github.head_ref}}
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
