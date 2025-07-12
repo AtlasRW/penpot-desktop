@@ -36,8 +36,8 @@ runs:
     - name: Cache npm dependencies
       uses: actions/cache@v4
       with:
-        path: "~/.npm"
-        key: node-${{ build-os }}-${{ hashFiles('**/package-lock.json') }}
+        path: ~/.npm
+        key: node-${{ inputs.build-os }}-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
       shell: bash
