@@ -32,22 +32,3 @@ jobs:
           #   dist/*.deb
           #   dist/*.zip
           #   dist/*.blockmap
-
-# jobs:
-#   build:
-#     # uses: ${{github.repository}}/.github/workflows/build-int.yml@${{github.ref}}
-#     uses: ./.github/workflows/build-int.yml
-#     with:
-#       artifacts-paths: |
-#         dist/file-*-1.txt
-#         dist/file-*-2.txt
-#   #   with:
-#   #     artifacts-paths: |
-#   #       dist/latest*.yml
-#   #       dist/*.exe
-#   #       dist/*.AppImage
-#   #       dist/*.dmg
-#   #       dist/*.rpm
-#   #       dist/*.deb
-#   #       dist/*.zip
-#   #       dist/*.blockmap
