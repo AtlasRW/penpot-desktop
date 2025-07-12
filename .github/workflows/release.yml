@@ -68,7 +68,8 @@ jobs:
           mv dist/*.exe windows/
           mv dist/*.{AppImage,rpm,deb} linux/
           mv dist/*.{dmg,zip} macos/
-          rm -Rf dist/
+
+      - run: ls -R
 
       - name: Release
         uses: softprops/action-gh-release@v2
