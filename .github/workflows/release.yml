@@ -26,19 +26,18 @@ jobs:
           # is-publish:
           build-os: ${{ matrix.os }}
           gh-token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts-paths: dist/file-*-1.txt
           # artifacts-paths: |
           #   dist/file-*-1.txt
           #   dist/file-*-2.txt
-          # artifacts-paths: |
-          #   dist/latest*.yml
-          #   dist/*.exe
-          #   dist/*.AppImage
-          #   dist/*.dmg
-          #   dist/*.rpm
-          #   dist/*.deb
-          #   dist/*.zip
-          #   dist/*.blockmap
+          artifacts-paths: |
+            dist/latest*.yml
+            dist/*.exe
+            dist/*.AppImage
+            dist/*.dmg
+            dist/*.rpm
+            dist/*.deb
+            dist/*.zip
+            dist/*.blockmap
 
   release:
     needs: [build]
