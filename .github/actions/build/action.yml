@@ -38,7 +38,7 @@ runs:
     - name: Cache Build files
       uses: actions/cache@v4
       with:
-        key: build-${{ inputs.build-os }}-${{ hashFiles('**/package-lock.json') }}
+        key: build-${{ inputs.build-os }}-${{github.event.head_commit.id}}
         path: dist/
         # restore-keys: |
         #   build-${{ inputs.build-os }}-
