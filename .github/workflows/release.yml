@@ -80,7 +80,7 @@ jobs:
           append_body: true
           generate_release_notes: true
           files: |
-            windows/
-            linux/
-            macos/
+            windows/*
+            linux/*
+            macos/*
           body: "HEY"
