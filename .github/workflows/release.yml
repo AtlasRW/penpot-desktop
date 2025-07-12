@@ -15,7 +15,7 @@ on:
 jobs:
   build:
     if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
-    uses: ${{ github.repository }}/.github/workflows/build-int.yml@${{ github.ref }}
+    uses: ${{github.repository}}/.github/workflows/build-int.yml@${{github.ref}}
     with:
       artifacts-paths: |
         dist/file-*-1.txt
