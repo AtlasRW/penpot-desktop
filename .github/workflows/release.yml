@@ -77,7 +77,7 @@ jobs:
           # tag_name: ${{}} chore/release
           draft: true
           make_latest: true
-          append_body: true
+          # append_body: true
           generate_release_notes: true
           files: |
             windows/*
