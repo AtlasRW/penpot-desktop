@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   build:
+    # New release is created only on merge of a branch with 'chore/release' on the 'main' branch
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'chore/release')
 
     strategy:
@@ -55,6 +56,7 @@ jobs:
           merge-multiple: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Filtering and renaming for easier understanding of the platforms/architectures for final users
       - name: Rename artifacts
         shell: bash
         run: |
@@ -71,7 +73,7 @@ jobs:
           mv dist/*.dmg            release/PenpotDesktop_macos_x64.dmg
           mv dist/*.exe            release/PenpotDesktop_windows_x64.exe
 
-      - name: Release
+      - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           name: "v${{ env.RELEASE_VERSION }} (${{ env.RELEASE_DATE }})"

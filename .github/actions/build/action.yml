@@ -33,6 +33,7 @@ runs:
       with:
         node-version: 22
 
+    # Cache npm dependencies, creates a new cache on new versions of package-lock.json
     - name: Cache npm dependencies
       uses: actions/cache@v4
       with:
@@ -57,6 +58,7 @@ runs:
       shell: bash
       run: npm run check
 
+    # Cache build result, creates a new cache on new commit hash
     - name: Cache Build files
       uses: actions/cache@v4
       with:
