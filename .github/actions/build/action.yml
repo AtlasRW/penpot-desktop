@@ -35,7 +35,7 @@ runs:
   #       retention-days: 1
 
   steps:
-    - name: Cache build outputs
+    - name: Cache Build files
       uses: actions/cache@v4
       with:
         key: build-${{ inputs.build-os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
@@ -44,6 +44,10 @@ runs:
         #   npm-feature-${{ hashFiles('package-lock.json') }}
         #   npm-feature-
         #   npm-
+    - shell: bash
+      run: echo $GITHUB_CONTEXT
+      env:
+        GITHUB_CONTEXT: ${{toJson(github)}}
     - uses: actions/setup-node@v4
       with:
         node-version: 22
