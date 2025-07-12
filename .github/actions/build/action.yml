@@ -5,17 +5,17 @@ inputs:
   build-os:
     description: target OS for building Application
     required: true
-  dependencies-bot-name:
-    description: name of dependency bot (dependabot)
-    required: true
-    default: "dependabot[bot]"
-  gh-token:
-    description: GitHub token
-    required: true
   artifacts-paths:
     description: paths to files to keep from artifacts
     required: true
     default: "**/*"
+  github-token:
+    description: GitHub token
+    required: true
+  dependencies-bot-name:
+    description: name of dependency bot (dependabot)
+    required: true
+    default: "dependabot[bot]"
 
 runs:
   using: composite
@@ -61,7 +61,7 @@ runs:
           npm run build -- --x64 --arm64 --publish=never
         fi
       env:
-        GH_TOKEN: ${{ inputs.gh-token }}
+        GH_TOKEN: ${{ inputs.github-token }}
     - name: Save artifacts
       uses: actions/upload-artifact@v4
       with:

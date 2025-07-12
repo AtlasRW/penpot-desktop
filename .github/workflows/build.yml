@@ -21,7 +21,7 @@ jobs:
       - uses: ./.github/actions/build
         with:
           build-os: ${{ matrix.os }}
-          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           # artifacts-paths: |
           #   dist/file-*-1.txt
           #   dist/file-*-2.txt
