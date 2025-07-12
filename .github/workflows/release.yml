@@ -18,6 +18,7 @@ jobs:
     # uses: ${{github.repository}}/.github/workflows/build-int.yml@${{github.ref}}
     uses: ./.github/workflows/build-int.yml
     with:
+      # artifacts-paths: dist/file-*-1.txt
       artifacts-paths: |
         dist/file-*-1.txt
         dist/file-*-2.txt
@@ -36,7 +37,6 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
-    # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
 
     steps:
       # - name: Build
@@ -46,14 +46,12 @@ jobs:
       - run: echo $GITHUB_CONTEXT
         env:
           GITHUB_CONTEXT: ${{toJson(github)}}
-      # - name: Build Test
-      #   uses: ${{ github.repository }}/.github/workflows/build-test.yml@${{ github.ref#refs/heads/ }}
-      # - name: Download artifacts
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     # run-id: ${{ github.event.workflow_run.id }}
-      #     # github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     pattern: build-*
-      #     # path: my-artifact
-      #     merge-multiple: true
-      # - run: ls -R
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          # run-id: ${{ github.event.workflow_run.id }}
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: build-*
+          # path: my-artifact
+          merge-multiple: true
+      - run: ls -R
