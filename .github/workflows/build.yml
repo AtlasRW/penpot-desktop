@@ -5,7 +5,8 @@ name: Build
 #   pull_request:
 #     types: [opened, synchronize, reopened, closed]
 # on: [push, pull_request, workflow_call]
-on: [push, pull_request]
+on: [workflow_call]
+# on: [push, pull_request]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
@@ -13,6 +14,18 @@ permissions:
 
 env:
   DEPENDENCIES_BOT_NAME: "dependabot[bot]"
+  ARTIFACTS_PATHS: |
+    dist/file-*-1.txt
+    dist/file-*-2.txt
+  # ARTIFACTS_PATHS: |
+  #   dist/latest*.yml
+  #   dist/*.exe
+  #   dist/*.AppImage
+  #   dist/*.dmg
+  #   dist/*.rpm
+  #   dist/*.deb
+  #   dist/*.zip
+  #   dist/*.blockmap
 
 jobs:
   # build:
@@ -81,23 +94,23 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.os }}
-          path: dist/*.txt
+          path: ${{ env.ARTIFACTS_PATHS }}
           retention-days: 1
 
-  # release:
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   if: |
-  #     github.event_name == 'pull_request' && github.event.pull_request.merged == true
-  #     && github.base_ref == 'homebrew-test' && contains(github.head_ref, 'chore/release')
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    # if: |
+    #   github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    #   && github.base_ref == 'homebrew-test' && contains(github.head_ref, 'chore/release')
 
-  #   steps:
-  #     - name: Download artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         # run-id: ${{ github.event.workflow_run.id }}
-  #         # github-token: ${{ secrets.GITHUB_TOKEN }}
-  #         pattern: build-*
-  #         # path: my-artifact
-  #         merge-multiple: true
-  #     - run: ls -R
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          # run-id: ${{ github.event.workflow_run.id }}
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: build-*
+          # path: my-artifact
+          merge-multiple: true
+      - run: ls -R

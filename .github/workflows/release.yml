@@ -12,20 +12,33 @@ on:
     branches: [homebrew-test]
     types: [closed]
 
-permissions:
-  # Required for Electron Builder to create and update releases on Github
-  contents: write
-
-env:
-  DEPENDENCIES_BOT_NAME: "dependabot[bot]"
-
 jobs:
+  build:
+    if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
+    uses: ${{ github.repository }}/.github/workflows/build-int.yml@${{ github.ref }}
+    with:
+      artifacts-paths: |
+        dist/file-*-1.txt
+        dist/file-*-2.txt
+    # with:
+    #   artifacts-paths: |
+    #     dist/latest*.yml
+    #     dist/*.exe
+    #     dist/*.AppImage
+    #     dist/*.dmg
+    #     dist/*.rpm
+    #     dist/*.deb
+    #     dist/*.zip
+    #     dist/*.blockmap
+
   release:
-    # needs: [build]
+    needs: [build]
     runs-on: ubuntu-latest
     # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
 
     steps:
+      # - name: Build
+      #   uses: ${{ github.repository }}/.github/workflows/build.yml@${{ github.ref }}
       - run: echo ${{github.head_ref}}
       - run: echo ${{github.base_ref}}
       - run: echo $GITHUB_CONTEXT
