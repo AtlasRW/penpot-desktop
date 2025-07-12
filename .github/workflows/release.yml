@@ -34,22 +34,15 @@ jobs:
         with:
           build-os: ${{ matrix.os }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts-paths: |
-            dist/*.exe
-            dist/*.AppImage
-            dist/*.rpm
-            dist/*.deb
-            dist/*.dmg
-            dist/*.zip
 
   release:
     needs: [build]
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo $GITHUB_CONTEXT
-        env:
-          GITHUB_CONTEXT: ${{github.head_ref}}
+      # - run: echo $GITHUB_CONTEXT
+      #   env:
+      #     GITHUB_CONTEXT: ${{github.head_ref}}
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -77,6 +70,7 @@ jobs:
         with:
           # name: ""
           # tag_name: ${{}} chore/release
+          tag_name: v0.0.1
           draft: true
           make_latest: true
           # append_body: true
