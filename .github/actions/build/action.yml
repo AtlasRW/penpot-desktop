@@ -43,21 +43,6 @@ runs:
         # restore-keys: |
         #   build-${{ inputs.build-os }}-
 
-    # - shell: bash
-    #   run: echo $GITHUB_CONTEXT
-    #   env:
-    #     GITHUB_CONTEXT: ${{toJson(github)}}
-
-    # - shell: bash
-    #   run: echo $GITHUB_COMMIT
-    #   env:
-    #     GITHUB_COMMIT: ${{toJson(github.event.head_commit)}}
-
-    # - shell: bash
-    #   run: echo $GITHUB_EVENT
-    #   env:
-    #     GITHUB_EVENT: ${{toJson(github.event)}}
-
     - uses: actions/setup-node@v4
       with:
         node-version: 22
