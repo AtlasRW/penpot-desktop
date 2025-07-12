@@ -34,7 +34,7 @@ runs:
         node-version: 22
 
     - name: Cache npm dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: "~/.npm"
         key: node-${{ build-os }}-${{ hashFiles('**/package-lock.json') }}
