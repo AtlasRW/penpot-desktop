@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    if: contains(github.head_ref, 'release version')
+    if: contains(github.head_ref, 'chore/release')
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
