@@ -44,9 +44,8 @@ jobs:
         run: |
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
           echo "TAG_NAME=$(echo "$GH_RELEASE_BRANCH" | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
-          echo
         env:
-          GH_RELEASE_BRANCH: ${{github.head_ref}}
+          GH_RELEASE_BRANCH: ${{github.ref_name || github.head_ref}}
 
       - run: echo $GH
         env:
