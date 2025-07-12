@@ -51,7 +51,7 @@ runs:
     - shell: bash
       run: echo $GITHUB_COMMIT
       env:
-        GITHUB_COMMIT: ${{github.event.head_commit.message}}
+        GITHUB_COMMIT: ${{github.event.head_commit}}
 
     - uses: actions/setup-node@v4
       with:
