@@ -65,7 +65,7 @@ jobs:
           mkdir windows
           mkdir linux
           mkdir macos
-          mv dist/*.{exe} windows/
+          mv dist/*.exe windows/
           mv dist/*.{AppImage,rpm,deb} linux/
           mv dist/*.{dmg,zip} macos/
 
