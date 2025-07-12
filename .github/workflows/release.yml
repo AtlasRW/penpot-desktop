@@ -30,6 +30,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: ./.github/actions/build
         with:
           build-os: ${{ matrix.os }}
@@ -40,9 +41,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - run: echo $GITHUB_CONTEXT
-      #   env:
-      #     GITHUB_CONTEXT: ${{github.head_ref}}
+      - name: Get Current Date
+        run: echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Get Tag Name/Semver
+        run: echo "TAG_NAME=$0.0.2" >> $GITHUB_ENV
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -68,14 +71,13 @@ jobs:
           mv dist/*.dmg            release/PenpotDesktop_macos_x64.dmg
           mv dist/*.exe            release/PenpotDesktop_windows_x64.exe
 
-      - run: ls -R
       - name: Release
         uses: softprops/action-gh-release@v2
         # if: github.ref_type == 'tag'
         with:
-          # name: ""
+          name: "v${{env.TAG_NAME}} (${{env.RELEASE_DATE}})"
           # tag_name: ${{}} chore/release
-          tag_name: v0.0.1
+          tag_name: v${{env.TAG_NAME}}
           draft: true
           make_latest: true
           # append_body: true

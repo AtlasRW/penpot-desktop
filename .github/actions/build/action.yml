@@ -63,12 +63,11 @@ runs:
   #     with:
   #       key: build-${{ inputs.build-os }}-${{ github.event.head_commit.id || github.event.pull_request.head.sha }}
   #       path: dist/
-  #       restore-keys: |
-  #       build-${{ inputs.build-os }}-
   #
   #   - uses: actions/setup-node@v4
   #     with:
   #       node-version: 22
+
   #   - name: Install dependencies
   #     shell: bash
   #     run: npm ci
