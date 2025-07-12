@@ -36,6 +36,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
+    # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
 
     steps:
       # - name: Build
