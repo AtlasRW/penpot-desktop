@@ -94,4 +94,4 @@ jobs:
           files: release/*
           body: |
             HEY
-            **Full Changelog**: /${{ github.repository }}/commits/${{ steps.get-latest-release.outputs.release }}...${{ env.RELEASE_VERSION }}
+            **Full Changelog**: https://github.com/${{ github.repository }}/commits/${{ steps.get-latest-release.outputs.release }}...${{ env.RELEASE_VERSION }}
