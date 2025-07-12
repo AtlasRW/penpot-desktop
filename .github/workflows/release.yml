@@ -13,36 +13,30 @@ on:
     types: [closed]
 
 jobs:
-  build:
-    if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
-    # uses: ${{github.repository}}/.github/workflows/build-int.yml@${{github.ref}}
-    uses: ./.github/workflows/build-int.yml
-    with:
-      # artifacts-paths: dist/file-*-1.txt
-      artifacts-paths: |
-        dist/file-*-1.txt
-        dist/file-*-2.txt
-    # with:
-    #   artifacts-paths: |
-    #     dist/latest*.yml
-    #     dist/*.exe
-    #     dist/*.AppImage
-    #     dist/*.dmg
-    #     dist/*.rpm
-    #     dist/*.deb
-    #     dist/*.zip
-    #     dist/*.blockmap
-
   release:
-    needs: [build]
     runs-on: ubuntu-latest
-    # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
+    if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
 
     steps:
-      # - name: Build
-      #   uses: ${{ github.repository }}/.github/workflows/build.yml@${{ github.ref }}
-      - run: echo ${{github.head_ref}}
-      - run: echo ${{github.base_ref}}
+      - name: Build
+        uses: ./.github/workflows/build-int.yml
+        # with:
+        #   artifacts-paths: dist/file-*-1.txt
+        with:
+          artifacts-paths: |
+            dist/file-*-1.txt
+            dist/file-*-2.txt
+        # with:
+        #   artifacts-paths: |
+        #     dist/latest*.yml
+        #     dist/*.exe
+        #     dist/*.AppImage
+        #     dist/*.dmg
+        #     dist/*.rpm
+        #     dist/*.deb
+        #     dist/*.zip
+        #     dist/*.blockmap
+
       - run: echo $GITHUB_CONTEXT
         env:
           GITHUB_CONTEXT: ${{toJson(github)}}
