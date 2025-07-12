@@ -5,7 +5,7 @@ on:
     branches: [homebrew-test]
     # branches: [main]
     types: [closed]
-  # push:
+  push:
   #   tags: [v*.*.*]
 
 permissions:
@@ -17,7 +17,8 @@ jobs:
     # if: |
     #   github.ref_type == 'tag' ||
     #   (github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release'))
-    if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
+
+    # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
 
     strategy:
       matrix:
