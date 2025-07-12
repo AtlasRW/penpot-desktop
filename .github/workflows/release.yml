@@ -2,7 +2,8 @@ name: Release
 
 on:
   pull_request:
-    branches: [main]
+    # branches: [main]
+    branches: [homebrew]
     types: [closed]
 
 permissions:
@@ -38,10 +39,6 @@ jobs:
         run: |
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
           echo "RELEASE_VERSION=$(echo ${{ github.ref_name || github.head_ref }} | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
-
-      - run: echo $GH
-        env:
-          GH: ${{ toJson(github) }}
 
       - name: Get current latest release
         uses: pozetroninc/github-action-get-latest-release@v0.8.0

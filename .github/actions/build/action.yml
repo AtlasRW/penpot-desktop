@@ -28,73 +28,73 @@ inputs:
 runs:
   using: composite
 
-  steps:
-    - name: Cache Build files
-      uses: actions/cache@v4
-      with:
-        key: build-${{ inputs.build-os }}-${{ github.event.head_commit.id || github.event.pull_request.head.sha }}
-        path: dist/
-    - name: Create a File
-      shell: bash
-      run: |
-        mkdir -p dist
-        echo "hello from ${{ matrix.os }}" > dist/penpot-desktop-0.16.0.aarch64.rpm
-        echo "hello from ${{ matrix.os }}" > dist/penpot-desktop-0.16.0.x86_64.rpm
-        echo "hello from ${{ matrix.os }}" > dist/penpot-desktop_0.16.0_amd64.deb
-        echo "hello from ${{ matrix.os }}" > dist/penpot-desktop_0.16.0_arm64.deb
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-arm64-mac.zip
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-arm64.AppImage
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-arm64.dmg
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-mac.zip
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0.AppImage
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0.dmg
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0.dmg
-        echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop---Setup.exe
-    - name: Save artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-${{ matrix.os }}
-        path: ${{ inputs.artifacts-paths }}
-        retention-days: 1
-
   # steps:
   #   - name: Cache Build files
   #     uses: actions/cache@v4
   #     with:
   #       key: build-${{ inputs.build-os }}-${{ github.event.head_commit.id || github.event.pull_request.head.sha }}
   #       path: dist/
-  #
-  #   - uses: actions/setup-node@v4
-  #     with:
-  #       node-version: 22
-
-  #   - name: Install dependencies
-  #     shell: bash
-  #     run: npm ci
-  #   - name: Validate commit messages - last push commit
-  #     if: github.event_name == 'push' && github.event.pusher.name != inputs.dependencies-bot-name
-  #     shell: bash
-  #     run: npx commitlint --last --verbose
-  #   - name: Validate commit messages - PR's commits
-  #     if: github.event_name == 'pull_request' && github.event.pull_request.user.login != inputs.dependencies-bot-name
-  #     shell: bash
-  #     run: npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}" --verbose
-  #   - name: Run code checks
-  #     shell: bash
-  #     run: npm run check
-  #   - name: Build
+  #   - name: Create a File
   #     shell: bash
   #     run: |
-  #       if [ "${{ github.head_ref || github.ref_name }}" = "main" ]; then
-  #         npm run build -- --x64 --arm64
-  #       else
-  #         npm run build -- --x64 --arm64 --publish=never
-  #       fi
-  #     env:
-  #       GH_TOKEN: ${{ inputs.github-token }}
+  #       mkdir -p dist
+  #       echo "hello from ${{ matrix.os }}" > dist/penpot-desktop-0.16.0.aarch64.rpm
+  #       echo "hello from ${{ matrix.os }}" > dist/penpot-desktop-0.16.0.x86_64.rpm
+  #       echo "hello from ${{ matrix.os }}" > dist/penpot-desktop_0.16.0_amd64.deb
+  #       echo "hello from ${{ matrix.os }}" > dist/penpot-desktop_0.16.0_arm64.deb
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-arm64-mac.zip
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-arm64.AppImage
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-arm64.dmg
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0-mac.zip
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0.AppImage
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0.dmg
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop-0.16.0.dmg
+  #       echo "hello from ${{ matrix.os }}" > dist/Penpot.Desktop---Setup.exe
   #   - name: Save artifacts
   #     uses: actions/upload-artifact@v4
   #     with:
-  #       name: build-${{ inputs.build-os }}
+  #       name: build-${{ matrix.os }}
   #       path: ${{ inputs.artifacts-paths }}
   #       retention-days: 1
+
+  steps:
+    - name: Cache Build files
+      uses: actions/cache@v4
+      with:
+        key: build-${{ inputs.build-os }}-${{ github.event.head_commit.id || github.event.pull_request.head.sha }}
+        path: dist/
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+    - name: Validate commit messages - last push commit
+      if: github.event_name == 'push' && github.event.pusher.name != inputs.dependencies-bot-name
+      shell: bash
+      run: npx commitlint --last --verbose
+    - name: Validate commit messages - PR's commits
+      if: github.event_name == 'pull_request' && github.event.pull_request.user.login != inputs.dependencies-bot-name
+      shell: bash
+      run: npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}" --verbose
+    - name: Run code checks
+      shell: bash
+      run: npm run check
+    - name: Build
+      shell: bash
+      run: |
+        if [ "${{ github.head_ref || github.ref_name }}" = "main" ]; then
+          npm run build -- --x64 --arm64
+        else
+          npm run build -- --x64 --arm64 --publish=never
+        fi
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+    - name: Save artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-${{ inputs.build-os }}
+        path: ${{ inputs.artifacts-paths }}
+        retention-days: 1
