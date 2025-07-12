@@ -32,7 +32,7 @@ runs:
     - name: Create a File
       shell: bash
       run: |
-        mkdir dist
+        mkdir -p dist
         echo "hello from ${{ matrix.os }}" > dist/win-x64-setup.exe
         echo "hello from ${{ matrix.os }}" > dist/mac-arm64.app.zip
         echo "hello from ${{ matrix.os }}" > dist/mac-universal.app.zip
