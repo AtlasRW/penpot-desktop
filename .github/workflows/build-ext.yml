@@ -4,19 +4,34 @@ on: [push, pull_request]
 
 jobs:
   build:
-    # uses: ${{github.repository}}/.github/workflows/build-int.yml@${{github.ref}}
-    uses: ./.github/workflows/build-int.yml
-    with:
-      artifacts-paths: |
-        dist/file-*-1.txt
-        dist/file-*-2.txt
-  #   with:
-  #     artifacts-paths: |
-  #       dist/latest*.yml
-  #       dist/*.exe
-  #       dist/*.AppImage
-  #       dist/*.dmg
-  #       dist/*.rpm
-  #       dist/*.deb
-  #       dist/*.zip
-  #       dist/*.blockmap
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: ./.github/actions/build/action.yml
+        with:
+          artifacts-paths: |
+            dist/file-*-1.txt
+            dist/file-*-2.txt
+
+# jobs:
+#   build:
+#     # uses: ${{github.repository}}/.github/workflows/build-int.yml@${{github.ref}}
+#     uses: ./.github/workflows/build-int.yml
+#     with:
+#       artifacts-paths: |
+#         dist/file-*-1.txt
+#         dist/file-*-2.txt
+#   #   with:
+#   #     artifacts-paths: |
+#   #       dist/latest*.yml
+#   #       dist/*.exe
+#   #       dist/*.AppImage
+#   #       dist/*.dmg
+#   #       dist/*.rpm
+#   #       dist/*.deb
+#   #       dist/*.zip
+#   #       dist/*.blockmap

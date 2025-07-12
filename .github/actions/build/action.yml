@@ -1,0 +1,55 @@
+name: Build
+description: Build Application
+
+inputs:
+  artifacts-paths:
+    description: paths to files to keep from artifacts
+    required: true
+    default: "**"
+  dependencies-bot-name:
+    description: name of dependency bot (dependabot)
+    required: true
+    default: "dependabot[bot]"
+  # is-publish:
+  #   description: is the build process aimed for publishing
+  #   required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+    - name: Validate commit messages - last push commit
+      if: github.event_name == 'push' && github.event.pusher.name != inputs.dependencies-bot-name
+      shell: bash
+      run: npx commitlint --last --verbose
+    - name: Validate commit messages - PR's commits
+      if: github.event_name == 'pull_request' && github.event.pull_request.user.login != inputs.dependencies-bot-name
+      shell: bash
+      run: npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}" --verbose
+    - name: Run code checks
+      shell: bash
+      run: npm run check
+    - name: Build
+      shell: bash
+      run: |
+        if [ "${{ github.head_ref || github.ref_name }}" = "main" ]; then
+          npm run build -- --x64 --arm64
+        else
+          npm run build -- --x64 --arm64 --publish=never
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Save artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-${{ matrix.os }}
+        path: ${{ inputs.artifacts-paths }}
+        retention-days: 1

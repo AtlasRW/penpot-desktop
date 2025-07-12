@@ -1,15 +1,9 @@
 name: Release
 
-# on: [push, pull_request]
-
-# on:
-#   workflow_call:
-#   workflow_run:
-#   #   workflows: [Build Test]
-#   #   types: [completed]
 on:
   pull_request:
     branches: [homebrew-test]
+    # branches: [main]
     types: [closed]
 
 jobs:
