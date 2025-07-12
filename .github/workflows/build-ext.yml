@@ -19,7 +19,10 @@ jobs:
           artifacts-paths: |
             dist/file-*-1.txt
             dist/file-*-2.txt
-
+          # dependencies-bot-name:
+          # is-publish:
+          build-os: ${{ matrix.os }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
 # jobs:
 #   build:
 #     # uses: ${{github.repository}}/.github/workflows/build-int.yml@${{github.ref}}

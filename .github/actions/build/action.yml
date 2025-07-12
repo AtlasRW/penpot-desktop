@@ -13,6 +13,12 @@ inputs:
   # is-publish:
   #   description: is the build process aimed for publishing
   #   required: true
+  gh-token:
+    description: GitHub token
+    required: true
+  build-os:
+    description: target OS for building Application
+    required: true
 
 runs:
   using: composite
@@ -46,10 +52,10 @@ runs:
           npm run build -- --x64 --arm64 --publish=never
         fi
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ inputs.gh-token }}
     - name: Save artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: build-${{ matrix.os }}
+        name: build-${{ inputs.build-os }}
         path: ${{ inputs.artifacts-paths }}
         retention-days: 1
