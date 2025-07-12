@@ -13,30 +13,32 @@ on:
     types: [closed]
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build:
     if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
+    uses: ./.github/workflows/build-int.yml
+    # with:
+    #   artifacts-paths: dist/file-*-1.txt
+    with:
+      artifacts-paths: |
+        dist/file-*-1.txt
+        dist/file-*-2.txt
+    # with:
+    #   artifacts-paths: |
+    #     dist/latest*.yml
+    #     dist/*.exe
+    #     dist/*.AppImage
+    #     dist/*.dmg
+    #     dist/*.rpm
+    #     dist/*.deb
+    #     dist/*.zip
+    #     dist/*.blockmap
+
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
 
     steps:
-      - name: Build
-        uses: ./.github/workflows/build-int.yml
-        # with:
-        #   artifacts-paths: dist/file-*-1.txt
-        with:
-          artifacts-paths: |
-            dist/file-*-1.txt
-            dist/file-*-2.txt
-        # with:
-        #   artifacts-paths: |
-        #     dist/latest*.yml
-        #     dist/*.exe
-        #     dist/*.AppImage
-        #     dist/*.dmg
-        #     dist/*.rpm
-        #     dist/*.deb
-        #     dist/*.zip
-        #     dist/*.blockmap
-
       - run: echo $GITHUB_CONTEXT
         env:
           GITHUB_CONTEXT: ${{toJson(github)}}
