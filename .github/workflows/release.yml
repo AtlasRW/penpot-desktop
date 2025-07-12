@@ -75,7 +75,7 @@ jobs:
         with:
           name: "v${{env.RELEASE_VERSION}} (${{env.RELEASE_DATE}})"
           tag_name: v${{env.RELEASE_VERSION}}
-          draft: true
+          prerelease: true
           make_latest: true
           # append_body: true
           generate_release_notes: true
