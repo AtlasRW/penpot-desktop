@@ -43,8 +43,9 @@ jobs:
       - name: Get Current Date / Semver Tag
         run: |
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-          echo "TAG_NAME_RRRR=0.0.2" >> $GITHUB_ENV
-          echo "TAG_NAME=(${{github.head_ref}} | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
+          echo "TAG_NAME=($GH_HEAD_REF | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
+        env:
+          GH_HEAD_REF: ${{github.head_ref}}
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
