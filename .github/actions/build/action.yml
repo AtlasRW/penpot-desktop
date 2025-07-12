@@ -39,15 +39,20 @@ runs:
       uses: actions/cache@v4
       with:
         key: build-${{ inputs.build-os }}-${{ hashFiles('**/package-lock.json') }}
-        path: ${{ inputs.artifacts-paths }}
+        path: dist/
         # restore-keys: |
-        #   npm-feature-${{ hashFiles('package-lock.json') }}
-        #   npm-feature-
-        #   npm-
+        #   build-${{ inputs.build-os }}-
+
     - shell: bash
       run: echo $GITHUB_CONTEXT
       env:
         GITHUB_CONTEXT: ${{toJson(github)}}
+
+    - shell: bash
+      run: echo $GITHUB_COMMIT
+      env:
+        GITHUB_COMMIT: ${{github.event.head_commit.message}}
+
     - uses: actions/setup-node@v4
       with:
         node-version: 22
