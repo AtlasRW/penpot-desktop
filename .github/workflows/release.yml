@@ -17,7 +17,6 @@ jobs:
     # if: |
     #   github.ref_type == 'tag' ||
     #   (github.event.pull_request.merged == true && startsWith(github.head_ref, 'chore/release'))
-
     # if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'chore/release')
 
     strategy:
@@ -44,9 +43,8 @@ jobs:
       - name: Get Current Date / Semver Tag
         run: |
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-          echo "TAG_NAME=0.0.2" >> $GITHUB_ENV
-          which sed
-          which grep
+          echo "TAG_NAME_RRRR=0.0.2" >> $GITHUB_ENV
+          echo "TAG_NAME=(${{github.head_ref}} | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
