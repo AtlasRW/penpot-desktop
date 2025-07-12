@@ -56,17 +56,17 @@ jobs:
         shell: bash
         run: |
           mkdir -p release
-          mv dist/*.aarch64.rpm    release/penpot-desktop.linux.arm64.rpm
-          mv dist/*.x86_64.rpm     release/penpot-desktop.linux.x64.rpm
-          mv dist/*_arm64.deb      release/penpot-desktop.linux.arm64.deb
-          mv dist/*_amd64.deb      release/penpot-desktop.linux.x64.deb
-          mv dist/*-arm64.AppImage release/PenpotDesktop.linux.arm64.AppImage
-          mv dist/*.AppImage       release/PenpotDesktop.linux.x64.AppImage
-          mv dist/*-arm64-mac.zip  release/PenpotDesktop.macos.arm64.app.zip
-          mv dist/*-mac.zip        release/PenpotDesktop.macos.x64.app.zip
-          mv dist/*-arm64.dmg      release/PenpotDesktop.macos.arm64.dmg
-          mv dist/*.dmg            release/PenpotDesktop.macos.x64.dmg
-          mv dist/*.exe            release/PenpotDesktop.windows.x64.exe
+          mv dist/*.aarch64.rpm    release/penpot-desktop.linux_arm64.rpm
+          mv dist/*.x86_64.rpm     release/penpot-desktop.linux_x64.rpm
+          mv dist/*_arm64.deb      release/penpot-desktop.linux_arm64.deb
+          mv dist/*_amd64.deb      release/penpot-desktop.linux_x64.deb
+          mv dist/*-arm64.AppImage release/PenpotDesktop.linux_arm64.AppImage
+          mv dist/*.AppImage       release/PenpotDesktop.linux_x64.AppImage
+          mv dist/*-arm64-mac.zip  release/PenpotDesktop.macos_arm64.app.zip
+          mv dist/*-mac.zip        release/PenpotDesktop.macos_x64.app.zip
+          mv dist/*-arm64.dmg      release/PenpotDesktop.macos_arm64.dmg
+          mv dist/*.dmg            release/PenpotDesktop.macos_x64.dmg
+          mv dist/*.exe            release/PenpotDesktop.windows_x64.exe
 
       - run: ls -R
       - name: Release
