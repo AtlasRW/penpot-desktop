@@ -45,6 +45,18 @@ jobs:
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
           echo "RELEASE_VERSION=$(echo ${{github.ref_name || github.head_ref}} | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")" >> $GITHUB_ENV
 
+      - run: echo $GH
+        env:
+          GH: ${{toJson(github)}}
+
+      - name: Get current latest release
+        uses: pozetroninc/github-action-get-latest-release@v0.8.0
+        id: get-latest-release
+        with:
+          repository: ${{github.repository}}
+          token: ${{secrets.GITHUB_TOKEN}}
+          excludes: prerelease, draft
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -80,4 +92,6 @@ jobs:
           # append_body: true
           generate_release_notes: true
           files: release/*
-          body: "HEY"
+          body: |
+            HEY
+            **Full Changelog**: https://github.com/${{ github.repository }}/commits/${{ steps.get-latest-release.outputs.release }}...${{ env.RELEASE_VERSION }}
