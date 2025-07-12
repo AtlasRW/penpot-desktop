@@ -55,15 +55,19 @@ jobs:
       - name: Rename artifacts
         shell: bash
         run: |
-          mkdir windows
-          mkdir linux
-          mkdir macos
-          mv dist/*.exe windows/
-          mv dist/*.{AppImage,rpm,deb} linux/
-          mv dist/*.{dmg,zip} macos/
-
+          mkdir -p release
+          mv dist/*.aarch64.rpm    release/penpot-desktop.linux.arm64.rpm
+          mv dist/*.x86_64.rpm     release/penpot-desktop.linux.x64.rpm
+          mv dist/*_arm64.deb      release/penpot-desktop.linux.arm64.deb
+          mv dist/*_amd64.deb      release/penpot-desktop.linux.x64.deb
+          mv dist/*-arm64.AppImage release/PenpotDesktop.linux.arm64.AppImage
+          mv dist/*.AppImage       release/PenpotDesktop.linux.x64.AppImage
+          mv dist/*-arm64-mac.zip  release/PenpotDesktop.macos.arm64.app.zip
+          mv dist/*-mac.zip        release/PenpotDesktop.macos.x64.app.zip
+          mv dist/*-arm64.dmg      release/PenpotDesktop.macos.arm64.dmg
+          mv dist/*.dmg            release/PenpotDesktop.macos.x64.dmg
+          mv dist/*.exe            release/PenpotDesktop.windows.x64.exe
       - run: ls -R
-
       - name: Release
         uses: softprops/action-gh-release@v2
         # if: github.ref_type == 'tag'
@@ -75,8 +79,5 @@ jobs:
           make_latest: true
           # append_body: true
           generate_release_notes: true
-          files: |
-            windows/*
-            linux/*
-            macos/*
+          files: release/*
           body: "HEY"
