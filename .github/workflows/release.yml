@@ -60,14 +60,12 @@ jobs:
           merge-multiple: true
           # github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - run: ls -R
-
       - name: Release
         uses: softprops/action-gh-release@v2
         # if: github.ref_type == 'tag'
         with:
           # name: ""
-          # tag_name: ""
+          # tag_name: ${{}} chore/release
           draft: true
           make_latest: true
           append_body: true
