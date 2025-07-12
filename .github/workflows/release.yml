@@ -67,6 +67,7 @@ jobs:
           mv dist/*-arm64.dmg      release/PenpotDesktop.macos.arm64.dmg
           mv dist/*.dmg            release/PenpotDesktop.macos.x64.dmg
           mv dist/*.exe            release/PenpotDesktop.windows.x64.exe
+
       - run: ls -R
       - name: Release
         uses: softprops/action-gh-release@v2
