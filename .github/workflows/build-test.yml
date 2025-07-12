@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    if: contains(github.head_ref, 'chore/release')
+    if: contains(github.head_ref, 'chore/release') && github.event.pull_request.merged == true
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
