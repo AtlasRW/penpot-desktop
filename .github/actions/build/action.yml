@@ -38,7 +38,7 @@ runs:
     - name: Cache Build files
       uses: actions/cache@v4
       with:
-        key: build-${{ inputs.build-os }}-${{github.event.head_commit.id}}
+        key: build-${{ inputs.build-os }}-${{ hashFiles('**/package-lock.json') }}
         path: dist/
         # restore-keys: |
         #   build-${{ inputs.build-os }}-
@@ -52,6 +52,11 @@ runs:
       run: echo $GITHUB_COMMIT
       env:
         GITHUB_COMMIT: ${{toJson(github.event.head_commit)}}
+
+    - shell: bash
+      run: echo $GITHUB_EVENT
+      env:
+        GITHUB_EVENT: ${{toJson(github.event)}}
 
     - uses: actions/setup-node@v4
       with:
