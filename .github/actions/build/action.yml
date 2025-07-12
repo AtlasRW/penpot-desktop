@@ -38,7 +38,12 @@ runs:
     - name: Cache build outputs
       uses: actions/cache@v4
       with:
+        key: build-${{ inputs.build-os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         path: ${{ inputs.artifacts-paths }}
+        # restore-keys: |
+        #   npm-feature-${{ hashFiles('package-lock.json') }}
+        #   npm-feature-
+        #   npm-
     - uses: actions/setup-node@v4
       with:
         node-version: 22
