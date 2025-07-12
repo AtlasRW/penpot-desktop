@@ -1,9 +1,11 @@
 name: Build
 
-on: [push, pull_request]
+# on:
+#   push:
+#   pull_request:
+#     types: [opened, synchronize, reopened, closed]
 # on: [push, pull_request, workflow_call]
-# on: [workflow_call]
-# on: [push]
+on: [push, pull_request]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
@@ -18,7 +20,7 @@ jobs:
   #     matrix:
   #       os: [ubuntu-latest, windows-latest, macos-latest]
 
-  #   runs-on: ${{ matrix.os}}
+  #   runs-on: ${{ matrix.os }}
 
   #   steps:
   #     - uses: actions/checkout@v4
@@ -67,7 +69,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
-    runs-on: ${{ matrix.os}}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Create a File
@@ -82,22 +84,20 @@ jobs:
           path: dist/*.txt
           retention-days: 1
 
-  release:
-    needs: [build]
-    runs-on: ubuntu-latest
-    if: |
-      github.event_name == 'pull_request'
-      && github.event.pull_request.merged == true
-      && github.base_ref == 'homebrew-test'
-      && contains(github.head_ref, 'chore/release')
+  # release:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   if: |
+  #     github.event_name == 'pull_request' && github.event.pull_request.merged == true
+  #     && github.base_ref == 'homebrew-test' && contains(github.head_ref, 'chore/release')
 
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          # run-id: ${{ github.event.workflow_run.id }}
-          # github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: build-*
-          # path: my-artifact
-          merge-multiple: true
-      - run: ls -R
+  #   steps:
+  #     - name: Download artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         # run-id: ${{ github.event.workflow_run.id }}
+  #         # github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         pattern: build-*
+  #         # path: my-artifact
+  #         merge-multiple: true
+  #     - run: ls -R

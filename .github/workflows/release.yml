@@ -2,11 +2,15 @@ name: Release
 
 # on: [push, pull_request]
 
+# on:
+#   workflow_call:
+#   workflow_run:
+#   #   workflows: [Build Test]
+#   #   types: [completed]
 on:
-  workflow_call:
-  workflow_run:
-  #   workflows: [Build Test]
-  #   types: [completed]
+  pull_request:
+    branches: [homebrew-test]
+    types: [closed]
 
 permissions:
   # Required for Electron Builder to create and update releases on Github
@@ -17,20 +21,24 @@ env:
 
 jobs:
   release:
+    # needs: [build]
     runs-on: ubuntu-latest
+    # if: github.event.pull_request.merged == true && contains(github.head_ref, 'chore/release')
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build Test
-        uses: ${{ github.repository }}/.github/workflows/build-test.yml@${{ github.ref#refs/heads/ }}
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-ubuntu-latest
-          # run-id: ${{ github.event.workflow_run.id }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: build-*
-          path: my-artifact
-          merge-multiple: true
-      - run: ls -R my-artifact
+      - run: echo ${{github.head_ref}}
+      - run: echo ${{github.base_ref}}
+      - run: echo $GITHUB_CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{toJson(github)}}
+      # - name: Build Test
+      #   uses: ${{ github.repository }}/.github/workflows/build-test.yml@${{ github.ref#refs/heads/ }}
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     # run-id: ${{ github.event.workflow_run.id }}
+      #     # github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     pattern: build-*
+      #     # path: my-artifact
+      #     merge-multiple: true
+      # - run: ls -R
