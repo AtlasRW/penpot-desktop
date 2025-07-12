@@ -34,13 +34,13 @@ runs:
       run: |
         mkdir -p dist
         echo "hello from ${{ matrix.os }}" > dist/win-x64-setup.exe
+        echo "hello from ${{ matrix.os }}" > dist/mac-x64.app.zip
         echo "hello from ${{ matrix.os }}" > dist/mac-arm64.app.zip
-        echo "hello from ${{ matrix.os }}" > dist/mac-universal.app.zip
+        echo "hello from ${{ matrix.os }}" > dist/mac-x64-setup.dmg
         echo "hello from ${{ matrix.os }}" > dist/mac-arm64-setup.dmg
-        echo "hello from ${{ matrix.os }}" > dist/mac-universal-setup.dmg
         echo "hello from ${{ matrix.os }}" > dist/linux-fedora-x64.rpm
-        echo "hello from ${{ matrix.os }}" > dist/linux-fedora-aarch64.rpm
-        echo "hello from ${{ matrix.os }}" > dist/linux-debian-amd64.deb
+        echo "hello from ${{ matrix.os }}" > dist/linux-fedora-arm64.rpm
+        echo "hello from ${{ matrix.os }}" > dist/linux-debian-x64.deb
         echo "hello from ${{ matrix.os }}" > dist/linux-debian-arm64.deb
         echo "hello from ${{ matrix.os }}" > dist/linux-universal-x64.AppImage
         echo "hello from ${{ matrix.os }}" > dist/linux-universal-arm64.AppImage
