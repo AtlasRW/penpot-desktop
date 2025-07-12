@@ -12,9 +12,6 @@ inputs:
   gh-token:
     description: GitHub token
     required: true
-  # is-publish:
-  #   description: is the build process aimed for publishing
-  #   required: true
   artifacts-paths:
     description: paths to files to keep from artifacts
     required: true

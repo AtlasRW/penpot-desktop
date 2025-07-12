@@ -22,8 +22,6 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/build
         with:
-          # dependencies-bot-name:
-          # is-publish:
           build-os: ${{ matrix.os }}
           gh-token: ${{ secrets.GITHUB_TOKEN }}
           # artifacts-paths: |
